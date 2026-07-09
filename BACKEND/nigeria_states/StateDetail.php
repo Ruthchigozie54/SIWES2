@@ -24,13 +24,13 @@ public function getStateDetail(string $state_name){
 }
 
 }
-// get the query parameter from the URL
+
 $stateInfo = $_GET['name'] ?? '';
 
-// instantiate the class, passing the $statesData array to the constructor
+
 $searcher = new StateDetail($statesData);
 
-// call the function inside the class to get the state details
+
 $state = $searcher->getStateDetail($stateInfo);
 
 // handle the response output

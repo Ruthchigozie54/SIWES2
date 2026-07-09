@@ -28,7 +28,7 @@ class Population {
     }
 }
 
-// Safely capture integers, validating that parameters are both set AND not empty strings
+// validating that parameters are both set AND not empty strings
 $lowest = (isset($_GET['lowest']) && $_GET['lowest'] !== '') ? (int)$_GET['lowest'] : 0;
 $highest = (isset($_GET['highest']) && $_GET['highest'] !== '') ? (int)$_GET['highest'] : 1000000000; 
 
