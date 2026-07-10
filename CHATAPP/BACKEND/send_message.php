@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once 'Chat.php';
 
-// 1. Try to read regular form-data / $_POST data first
+//  Try to read regular form-data / $_POST data first
 $senderId    = isset($_POST['sender_id']) ? $_POST['sender_id'] : null;
 $messageText = isset($_POST['message_text']) ? $_POST['message_text'] : null;
 
-// 2. Fallback: If $_POST is empty, check for a JSON raw payload
+// Fallback: If $_POST is empty, check for a JSON raw payload
 if (!$senderId || !$messageText) {
     $rawInput = file_get_contents("php://input");
     $jsonData = json_decode($rawInput, true);
@@ -26,7 +26,7 @@ if (!$senderId || !$messageText) {
     }
 }
 
-// 3. Process the message details if they are complete
+//  Process the message details if they are complete
 if ($senderId && $messageText) {
     $chat = new Chat();
     

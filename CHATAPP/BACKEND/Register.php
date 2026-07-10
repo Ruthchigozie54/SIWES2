@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once 'Authentication.php';
 
-// 1. Try to read regular form-data / $_POST data first
+//  Try to read regular form-data / $_POST data first
 $username = isset($_POST['username']) ? $_POST['username'] : null;
 $email    = isset($_POST['email']) ? $_POST['email'] : null;
 $password = isset($_POST['password']) ? $_POST['password'] : null;
 
-// 2. Fallback: If $_POST is empty, check for a JSON raw payload
+// Fallback: If $_POST is empty, check for a JSON raw payload
 if (!$username || !$email || !$password) {
     $rawInput = file_get_contents("php://input");
     $jsonData = json_decode($rawInput, true);
@@ -28,7 +28,7 @@ if (!$username || !$email || !$password) {
     }
 }
 
-// 3. Process the collected details if they are all complete
+// Process the collected details if they are all complete
 if ($username && $email && $password) {
     $auth = new Authentication();
     

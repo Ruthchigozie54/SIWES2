@@ -28,18 +28,34 @@ class Authentication implements DbInterface {
     }
 
     // Register User
-    public function registerUser($username, $email, $password) {
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+public function registerUser($username, $email, $password) {
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
+    try {
         $stmt = $this->conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $hashedPassword);
 
         if ($stmt->execute()) {
-            return ["status" => "success", "message" => "Account created!"];
+            return ["status" => "success", "message" => "Account created!", "user_id" => $stmt->insert_id];
         } else {
-            return ["status" => "error", "message" => "Username or Email already exists"];
+            return ["status" => "error", "message" => "Registration failed."];
         }
+    } catch (mysqli_sql_exception $e) {
+        // Check if the error code is 1062 (MySQL's error code for duplicate entries)
+        if ($e->getCode() === 1062) {
+            return [
+                "status" => "error", 
+                "message" => "This username or email is already taken."
+            ];
+        }
+        
+        // Return a generic fallback error for anything else
+        return [
+            "status" => "error", 
+            "message" => "Database error: " . $e->getMessage()
+        ];
     }
+}
 
     // Login User
     public function loginUser($username, $password) {

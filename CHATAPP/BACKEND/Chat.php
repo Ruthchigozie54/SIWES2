@@ -10,10 +10,10 @@ class Chat implements DbInterface {
     }
 
     public function connect() {
-        $host = "localhost"; 
-        $username = "root"; 
-        $password = ""; 
-        $dbname = "chat_app";
+        $host = "mysql-ruth.alwaysdata.net"; 
+        $username = "ruth_chigozie"; 
+        $password = "ru2th4.ch1"; 
+        $dbname = "ruth_chatapp";
 
         $this->conn = new mysqli($host, $username, $password, $dbname);
 
@@ -53,4 +53,6 @@ class Chat implements DbInterface {
         return ["status" => "success", "messages" => $messages];
     }
 }
+
+new chat();
 ?>
